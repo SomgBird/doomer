@@ -20,4 +20,3 @@ class Session:
         """
         self._wads_handler = WADsHandler(wads_path_str)
         # TODO: add other handlers
-

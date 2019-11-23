@@ -3,8 +3,8 @@ from doomer.session import Session
 
 
 def run():
-    session = Session('./', None, None, None)
     root = Tk()
-    label = Label(root, text=str(session.wads_handler))
+    session = Session('./', None, None, None)
+    label = Label(root, text=str(session.wads_handler.wads_list))
     label.pack()
     root.mainloop()
