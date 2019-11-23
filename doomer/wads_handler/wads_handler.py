@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 from tkinter import messagebox
 
 
@@ -8,7 +7,6 @@ class WADsHandler:
     def wads_list(self):
         """
         :return: list of all WADs files
-        :rtype: list
         """
         return self._wads_list
 
@@ -21,25 +19,16 @@ class WADsHandler:
                 if file.endswith('.wad') or file.endswith('.WAD'):
                     self.wads_list.append(self._wads_path/file)
 
-    @property
-    def wads_path_str(self):
-        """
-        :return: WADs files directory path
-        :rtype: str
-        """
-        return self._wads_path_str
-
-    def __init__(self, wads_path_str: str):
+    def __init__(self, wads_path):
         """
         WADsHandler constructor.
-        :param wads_path_str: WADs files directory path
-        :type wads_path_str: str
+        :param wads_path: WADs files directory path
         """
-        self._wads_path_str = wads_path_str
-        self._wads_path = Path(wads_path_str)
+        self._wads_path = wads_path
 
         try:
             self.wads_list = os.walk(self._wads_path)
+        # Incorrect path to WADs files
         except FileNotFoundError:
             self._wads_path = None
             self._wads_list = []
