@@ -19,5 +19,5 @@ class Session:
         :type saves_path_str: str
         """
         self._wads_handler = WADsHandler(wads_path_str)
-
+        # TODO: add other handlers
 
