@@ -1,4 +1,4 @@
-from doomer.wads_handler import WADsHandler
+from doomer.api.wads_handler import WADsHandler
 from pathlib import Path
 
 
