@@ -18,7 +18,6 @@ class WADsHandler:
 
         for root, dirs, files in value:
             for file in files:
-                print(file)
                 if file.endswith('.wad') or file.endswith('.WAD'):
                     self.wads_list.append(self._wads_path/file)
 
