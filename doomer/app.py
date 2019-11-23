@@ -1,5 +1,5 @@
 from tkinter import *
-from doomer.session import Session
+from doomer.api.session import Session
 
 
 def run():

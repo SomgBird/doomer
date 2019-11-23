@@ -1,5 +1,5 @@
-from doomer.api.wads_handler import WADsHandler
 from pathlib import Path
+from doomer.api.wads_handler import WADsHandler
 
 
 class Session:
