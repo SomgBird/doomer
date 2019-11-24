@@ -31,6 +31,5 @@ class WADsHandler:
         # Incorrect path to WADs files
         except FileNotFoundError:
             self._wads_path = None
-            self._wads_list = []
             messagebox.showerror('Path error!', 'Directory does not exist!')
 
