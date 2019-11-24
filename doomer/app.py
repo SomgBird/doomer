@@ -8,3 +8,4 @@ def run():
     label = Label(root, text=str(session.wads_handler.wads_list))
     label.pack()
     root.mainloop()
+
