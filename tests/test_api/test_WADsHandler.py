@@ -4,7 +4,7 @@ from doomer.api.wads_handler import WADsHandler
 from pathlib import Path
 
 
-CASES_PATH = Path('D:/Dev/doomer/doomer/tests/wads_handler_cases/')
+CASES_PATH = Path('D:/Dev/doomer/doomer/tests/test_api/wads_handler_cases/')
 
 
 @ddt

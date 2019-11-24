@@ -1,6 +1,11 @@
 class DoomsHandler:
+    @property
+    def dooms(self):
+        return self._dooms
+
     def __init__(self):
-        pass
+        self._dooms = None
+        # TODO: load Doom ports locations
 
     def add_doom(self, path, name: str):
         """

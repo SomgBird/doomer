@@ -1,5 +1,6 @@
 from pathlib import Path
 from doomer.api.wads_handler import WADsHandler
+from doomer.api.dooms_handler import DoomsHandler
 
 
 class Session:
@@ -7,7 +8,11 @@ class Session:
     def wads_handler(self):
         return self._wads_handler
 
-    def __init__(self, wads_path, screenshots_path, pk3_path, saves_path):
+    @property
+    def dooms_handler(self):
+        return self._dooms_handler
+
+    def __init__(self, config, wads_path, screenshots_path, pk3_path, saves_path):
         """
         Session constructor
         :param wads_path: WADs files directory path
@@ -16,4 +21,6 @@ class Session:
         :param saves_path: save files directory path
         """
         self._wads_handler = WADsHandler(Path(wads_path))
+        self._dooms_handler = DoomsHandler()
         # TODO: add other handlers
+
