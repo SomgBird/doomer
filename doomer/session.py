@@ -17,6 +17,6 @@ class Session:
         Session constructor
         """
         self._config = Config()
-        self._wads_handler = WADsHandler(self._config.config)
-        self._dooms_handler = DoomsHandler(self._config.config)
+        self._wads_handler = WADsHandler(self._config.config_dict)
+        self._dooms_handler = DoomsHandler(self._config)
         # TODO: add other handlers

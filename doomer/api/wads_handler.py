@@ -23,12 +23,12 @@ class WADsHandler:
             if file.endswith('.wad') or file.endswith('.WAD'):
                 self._wads_list.append(self._wads_path / file)
 
-    def __init__(self, config):
+    def __init__(self, config_dict):
         """
         WADsHandler constructor.
-        :param config: doomer configuration
+        :param config_dict: doomer configuration
         """
-        self._wads_path = Path(config['wads_path'])
+        self._wads_path = Path(config_dict['wads_path'])
 
         try:
             self.__set_wads_list(os.listdir(self._wads_path))

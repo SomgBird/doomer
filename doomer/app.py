@@ -22,10 +22,9 @@ def init_default_directories():
 
 
 def run():
-    root = Tk()
-
     init_default_directories()
 
+    root = Tk()
     session = Session()
     label = Label(root, text=str(session.wads_handler.wads_list))
     label.pack()

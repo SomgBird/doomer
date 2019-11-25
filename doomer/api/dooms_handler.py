@@ -8,6 +8,7 @@ class DoomsHandler:
         DoomsHandler constructor
         :param config: doomer configuration
         """
+        self._config = config
         self._dooms = config['dooms']
 
     def add_doom(self, path, name: str):
@@ -17,5 +18,15 @@ class DoomsHandler:
         :param name: name will be shown in Doom ports list
         :return: None
         """
-        pass
-        # TODO: add Doom ports
+        self._dooms[name] = path
+        self._config.update_dooms(self._dooms)
+
+    def delete_doom(self, name: str):
+        """
+        Delete Doom port from doomer
+        :param name: Doom port name
+        :return: None
+        """
+        self._dooms.pop(name, None)
+        self._config.update_dooms(self._dooms)
+

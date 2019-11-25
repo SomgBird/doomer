@@ -5,7 +5,7 @@ from pathlib import Path
 
 class Config:
     @property
-    def config(self):
+    def config_dict(self):
         return self._config_dict
 
     def __init__(self, path=Path('./config.json')):
@@ -27,6 +27,10 @@ class Config:
         config_dict['dooms'] = dict()
 
         self._config_dict = config_dict
+        self.write_config()
+
+    def update_dooms(self, dooms_dict):
+        self._config_dict['dooms'] = dooms_dict
         self.write_config()
 
     def write_config(self):
