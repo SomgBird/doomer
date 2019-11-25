@@ -13,6 +13,7 @@ DEFAULT_DIRS = [
 ]
 
 
+# TODO: вынести конфиг в отдельный класс и работать с ним из сессии и других классов
 def init_default_config():
     config_dict = dict()
     config_dict['wads_path'] = './wads'
@@ -39,7 +40,10 @@ def run():
     if not os.path.exists('./config.json'):
         init_default_config()
 
-    session = Session('./', './config.json', None, None, None)
+    with open('config.json') as config_file:
+        config = json.load(config_file)
+
+    session = Session(config)
     label = Label(root, text=str(session.wads_handler.wads_list))
     label.pack()
     root.mainloop()

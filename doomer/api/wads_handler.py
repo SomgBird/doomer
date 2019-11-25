@@ -1,5 +1,6 @@
 import os
 from tkinter import messagebox
+from pathlib import Path
 
 
 class WADsHandler:
@@ -10,26 +11,27 @@ class WADsHandler:
         """
         return self._wads_list
 
-    @wads_list.setter
-    def wads_list(self, value):
+    def __set_wads_list(self, files_list):
+        """
+        Set list of WADs by parsing .wad or .WAD file extension
+        :param files_list: list of all files in directory
+        :return: None
+        """
         self._wads_list = []
 
-        for root, dirs, files in value:
-            for file in files:
-                if file.endswith('.wad') or file.endswith('.WAD'):
-                    self.wads_list.append(self._wads_path/file)
+        for file in files_list:
+            if file.endswith('.wad') or file.endswith('.WAD'):
+                self._wads_list.append(self._wads_path / file)
 
-    def __init__(self, wads_path):
+    def __init__(self, config):
         """
         WADsHandler constructor.
-        :param wads_path: WADs files directory path
+        :param config: doomer configuration
         """
-        self._wads_path = wads_path
+        self._wads_path = Path(config['wads_path'])
 
         try:
-            self.wads_list = os.walk(self._wads_path)
-        # Incorrect path to WADs files
+            self.__set_wads_list(os.listdir(self._wads_path))
         except FileNotFoundError:
             self._wads_path = None
             messagebox.showerror('Path error!', 'Directory does not exist!')
-

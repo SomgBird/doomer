@@ -6,7 +6,6 @@ from pathlib import Path
 
 CASES_PATH = Path('D:/Dev/doomer/doomer/tests/test_api/wads_handler_cases/')
 
-
 @ddt
 class TestWADsHandler(TestCase):
     @data(
@@ -34,5 +33,6 @@ class TestWADsHandler(TestCase):
     )
     @unpack
     def test_wads_list(self, wads_path, expected_wads):
-        wads_handler = WADsHandler(wads_path)
+        test_config = {'wads_path': wads_path}
+        wads_handler = WADsHandler(test_config)
         self.assertEqual(wads_handler.wads_list, expected_wads)
