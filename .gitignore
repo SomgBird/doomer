@@ -106,6 +106,7 @@ venv.bak/
 
 # doomer folders and configs
 config.json
+dooms.json
 
 configs/
 wads/

@@ -24,13 +24,9 @@ class Config:
         config_dict['saves_path'] = './saves'
         config_dict['screenshots_path'] = './screenshots'
         config_dict['configs_path'] = './configs'
-        config_dict['dooms'] = dict()
+        config_dict['dooms_path'] = './dooms.json'
 
         self._config_dict = config_dict
-        self.write_config()
-
-    def update_dooms(self, dooms_dict):
-        self._config_dict['dooms'] = dooms_dict
         self.write_config()
 
     def write_config(self):
