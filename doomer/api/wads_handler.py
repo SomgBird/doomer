@@ -11,6 +11,13 @@ class WADsHandler:
         """
         return self._wads_list
 
+    @property
+    def wads_path(self):
+        """
+        :return: path to WADs directory
+        """
+        return self._wads_path
+
     def __set_wads_list(self, files_list):
         """
         Set list of WADs by parsing .wad or .WAD file extension
@@ -26,12 +33,14 @@ class WADsHandler:
     def __init__(self, path):
         """
         WADsHandler constructor.
-        :param config_dict: doomer configuration
+        :param path: path to WADs files
         """
         self._wads_path = Path(path)
 
+        self.read_wads_list()
+
+    def read_wads_list(self):
         try:
             self.__set_wads_list(os.listdir(self._wads_path))
         except FileNotFoundError:
-            self._wads_path = None
-            messagebox.showerror('Path error!', 'Directory does not exist!')
+            messagebox.showerror('Path error!', 'WADs directory does not exist!')

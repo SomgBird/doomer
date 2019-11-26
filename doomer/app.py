@@ -1,9 +1,6 @@
-import json
 import os
-from tkinter import *
-
-
-from doomer.session import Session
+from session import Session
+from ui import UI
 
 DEFAULT_DIRS = [
     'wads',
@@ -24,8 +21,5 @@ def init_default_directories():
 def run():
     init_default_directories()
 
-    root = Tk()
     session = Session()
-    label = Label(root, text=str(session.wads_handler.wads_list))
-    label.pack()
-    root.mainloop()
+    app_ui = UI(session)
