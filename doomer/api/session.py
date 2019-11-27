@@ -1,6 +1,6 @@
-from doomer.api.wads_handler import WADsHandler
-from doomer.api.dooms_handler import DoomsHandler
-from doomer.config import Config
+from wads_handler import WADsHandler
+from dooms_handler import DoomsHandler
+from config import Config
 
 
 class Session:
@@ -11,6 +11,10 @@ class Session:
     @property
     def dooms_handler(self):
         return self._dooms_handler
+
+    @property
+    def config(self):
+        return self._config
 
     def __init__(self):
         """

@@ -29,6 +29,10 @@ class Config:
         self._config_dict = config_dict
         self.write_config()
 
+    def set_field(self, name, value):
+        if name in self._config_dict.keys():
+            self._config_dict[name] = value
+
     def write_config(self):
         with open(self._config_path, 'w') as config_file:
             json.dump(self._config_dict, config_file, indent=4)
