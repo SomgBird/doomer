@@ -102,3 +102,15 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# doomer folders and configs
+config.json
+dooms.json
+
+configs/
+wads/
+dooms/
+pk3s/
+screenshots/
+saves/

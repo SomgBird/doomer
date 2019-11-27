@@ -1,1 +1,0 @@
-from doomer.screenshot_handler.screenshot_handler import ScreenshotsHandler
