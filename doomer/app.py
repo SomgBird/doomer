@@ -1,6 +1,6 @@
 import os
 from session import Session
-from ui import UI
+from ui.ui import UI
 
 DEFAULT_DIRS = [
     'wads',
