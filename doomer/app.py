@@ -1,6 +1,6 @@
 import os
 from session import Session
-from ui.ui import UI
+from api.ui.ui_handler import UI
 
 DEFAULT_DIRS = [
     'wads',

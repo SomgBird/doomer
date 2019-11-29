@@ -1,5 +1,7 @@
 import tkinter as tk
 import tkinter.filedialog
+import tkinter.messagebox
+import tkinter.simpledialog
 from abs_frame import AbstractFrame
 
 
@@ -20,14 +22,27 @@ class DoomsFrame(AbstractFrame):
         """
         super().__init__(window, session, side)
 
+        # Dooms management frame
         self._dooms_frame = tk.LabelFrame(self._window, text='Dooms')
         self._dooms_frame.pack(padx=10, pady=10, side=self._side)
-        self._add_dooms_button = tk.Button(self._dooms_frame,
-                                           text='Add new Doom',
+
+        # Buttons subframe
+        self._buttons_subframe = tk.Frame(self._dooms_frame)
+        self._buttons_subframe.pack(side=tk.TOP)
+
+        # Add Doom button
+        self._add_dooms_button = tk.Button(self._buttons_subframe,
+                                           text='Add',
                                            command=self.__add_doom_dialog)
-        self._add_dooms_button.pack()
-        self._dooms_label = tk.Label(self._dooms_frame)
-        self._dooms_label.pack()
+        self._add_dooms_button.pack(side=tk.LEFT, padx=5, pady=5)
+
+        # Delete Doom button
+        self._delete_doom_button = tk.Button(self._buttons_subframe,
+                                             text='Delete',
+                                             command=self.__delete_doom_dialog)
+        self._delete_doom_button.pack(side=tk.RIGHT, padx=5, pady=5)
+
+        # List of Dooms
         self._dooms_list_box = tk.Listbox(self._dooms_frame, width=40, height=25)
         self._dooms_list_box.pack()
         self.__update_dooms_list_box()
@@ -38,7 +53,23 @@ class DoomsFrame(AbstractFrame):
         :return: None
         """
         doom_path = tk.filedialog.askopenfilename()
-        self._session.dooms_handler.add_doom(name='test', path=doom_path)
+        doom_name = tk.simpledialog.askstring('test', 'test')
+        if doom_name is None:
+            return
+        self._session.dooms_handler.add_doom(name=doom_name, path=doom_path)
+        self._session.dooms_handler.write_dooms()
+        self.__update_dooms_list_box()
+
+    def __delete_doom_dialog(self):
+        """
+        Delete Doom port from Doomer
+        :return: None
+        """
+        if tk.messagebox.askquestion('Sure?',
+                                     'Are you really want to delete ' + str(self.active_doom) + ' from Doomer?') \
+                != 'yes':
+            return
+        self._session.dooms_handler.delete_doom(self.active_doom)
         self._session.dooms_handler.write_dooms()
         self.__update_dooms_list_box()
 
