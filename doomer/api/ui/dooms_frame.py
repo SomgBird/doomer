@@ -53,9 +53,13 @@ class DoomsFrame(AbstractFrame):
         :return: None
         """
         doom_path = tk.filedialog.askopenfilename()
+        if doom_path == '':
+            return
+
         doom_name = tk.simpledialog.askstring('test', 'test')
         if doom_name is None:
             return
+        
         self._session.dooms_handler.add_doom(name=doom_name, path=doom_path)
         self._session.dooms_handler.write_dooms()
         self.__update_dooms_list_box()
