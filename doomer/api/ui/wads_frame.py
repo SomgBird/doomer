@@ -1,19 +1,28 @@
 import tkinter as tk
 import tkinter.filedialog
+from abs_frame import AbstractFrame
 
 
-class WADsFrame:
+class WADsFrame(AbstractFrame):
     @property
     def active_wad(self):
+        """
+        :return: chosen WAD file
+        """
         return self._wads_list_box.get(tk.ACTIVE)
 
-    def __init__(self, window, session):
-        self._window = window
-        self._session = session
+    def __init__(self, window, session, side):
+        """
+        WADs frame constructor
+        :param window: frame layout window
+        :param session: Doomer session
+        :param side: layout side
+        """
+        super().__init__(window, session, side)
 
         # WADs management frame
         self._wads_frame = tk.LabelFrame(self._window, text='WADs')
-        self._wads_frame.pack(padx=10, pady=10, side=tk.LEFT)
+        self._wads_frame.pack(padx=10, pady=10, side=self._side)
 
         # Button to choose new WADs directory
         self._choose_wads_button = tk.Button(self._wads_frame,
@@ -33,11 +42,19 @@ class WADsFrame:
         self.__update_wads_list_box()
 
     def __update_wads_list_box(self):
+        """
+        Update list of WAD files
+        :return: None
+        """
         self._wads_list_box.delete(0, tk.END)
         for wad_name in self._session.wads_handler.wads_dict.keys():
             self._wads_list_box.insert(0, wad_name)
 
     def __choose_wads_directory_dialog(self):
+        """
+        Choose WADs directory from file system
+        :return: None
+        """
         wads_path = tk.filedialog.askdirectory()
         self._session.update_wads_handler(wads_path)
         self._wads_label.config(text=self._session.wads_handler.wads_path)

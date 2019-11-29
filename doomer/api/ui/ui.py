@@ -1,34 +1,37 @@
 import tkinter as tk
-import tkinter.filedialog
-from session import Session
-from launcher import Launcher
-from wads_frame import WADsFrame
+from controls_frame import ControlsFrame
 from dooms_frame import DoomsFrame
+from session import Session
+from wads_frame import WADsFrame
 
 
-# TODO: вынести фреймы в отдельный классы в doomer.api.ui
 class UI:
     def __init__(self, session: Session):
+        """
+        UI Constructor
+        :param session: Doomer session
+        """
         self._session = session
 
         # Main windows init
         self._main_window = tk.Tk()
-        self._main_window.geometry("600x600")
+        self._main_window.geometry("650x650")
         self._main_window.title('Doomer')
 
-        self._wads_frame = WADsFrame(self._main_window, self._session)
-        self._dooms_frame = DoomsFrame(self._main_window, self._session)
+        # Frame for launcher setup frames
+        self._setup_frame = tk.LabelFrame(self._main_window, text='Setup')
+        self._setup_frame.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=10)
 
-        # Test launch button
-        self._launch_button = tk.Button(self._main_window, text='Launch', command=self.__launch)
-        self._launch_button.pack(side=tk.TOP)
+        # Launcher setup frames
+        self._wads_frame = WADsFrame(self._setup_frame, self._session, tk.LEFT)
+        self._dooms_frame = DoomsFrame(self._setup_frame, self._session, tk.RIGHT)
+        self._controls_frame = ControlsFrame(
+            window=self._main_window,
+            session=self._session,
+            side=tk.TOP,
+            dooms_frame=self._dooms_frame,
+            wads_frame=self._wads_frame,
+            pk3_frame=None
+        )
 
         self._main_window.mainloop()
-
-    def __launch(self):
-        doom = self._session.dooms_handler.fspath_dict[self._dooms_frame.active_doom]
-        chosen_wad = self._session.wads_handler.wads_dict[self._wads_frame.active_wad]
-
-        launcher = Launcher(doom, chosen_wad)
-        launcher.launch()
-
