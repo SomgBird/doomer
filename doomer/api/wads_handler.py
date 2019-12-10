@@ -1,5 +1,4 @@
 import os
-from tkinter import messagebox
 from pathlib import Path
 
 
@@ -17,6 +16,13 @@ class WADsHandler:
         :return: path to WADs directory
         """
         return self._wads_path
+
+    def __init__(self):
+        """
+        WADsHandler constructor.
+        """
+        self._wads_path = None
+        self._wads_dict = dict()
 
     def __filter_wads(self, files_list):
         """
@@ -44,17 +50,6 @@ class WADsHandler:
         for wad in wads_list:
             self._wads_dict[wad.name] = wad
 
-    def __init__(self, path):
-        """
-        WADsHandler constructor.
-        :param path: path to WADs files
-        """
+    def read_wads_dict(self, path):
         self._wads_path = Path(path)
-
-        self.read_wads_dict()
-
-    def read_wads_dict(self):
-        try:
-            self.__set_wads_dict(os.listdir(self._wads_path))
-        except FileNotFoundError:
-            messagebox.showerror('Path error!', 'WADs directory does not exist!')
+        self.__set_wads_dict(os.listdir(self._wads_path))

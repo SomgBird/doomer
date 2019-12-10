@@ -1,6 +1,7 @@
 import os
-from session import Session
+
 from api.ui.ui_handler import UI
+from session import Session
 
 DEFAULT_DIRS = [
     'wads',
@@ -22,4 +23,5 @@ def run():
     init_default_directories()
 
     session = Session()
+
     app_ui = UI(session)

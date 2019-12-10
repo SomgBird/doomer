@@ -1,4 +1,6 @@
+import json
 import tkinter as tk
+import tkinter.messagebox
 from controls_frame import ControlsFrame
 from dooms_frame import DoomsFrame
 from session import Session
@@ -11,9 +13,9 @@ class UI:
         UI Constructor
         :param session: Doomer session
         """
-        self._session = session
 
         # Main windows init
+        self._session = session
         self._main_window = tk.Tk()
         self._main_window.geometry("650x650")
         self._main_window.title('Doomer')
@@ -34,4 +36,13 @@ class UI:
             pk3_frame=None
         )
 
+        try:
+            self._session.config.read_config()
+        except json.JSONDecodeError:
+            self._session.config.init_default_config()
+            self._session.config.write_config()
+            tk.messagebox.showerror('Error!', 'Could not load config file! Default configuration will be used.')
+
+        self._wads_frame.update_wads_list_box()
+        self._dooms_frame.update_dooms_list_box()
         self._main_window.mainloop()

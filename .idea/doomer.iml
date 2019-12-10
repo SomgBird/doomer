@@ -5,11 +5,9 @@
       <sourceFolder url="file://$MODULE_DIR$/doomer" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/doomer/api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/doomer/api/ui" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/doomer/api/exceptions" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-  <component name="TestRunnerService">
-    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
   </component>
 </module>

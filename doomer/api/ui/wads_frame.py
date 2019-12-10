@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.messagebox
 import tkinter.filedialog
 from abs_frame import AbstractFrame
 
@@ -38,17 +39,13 @@ class WADsFrame(AbstractFrame):
         self._wads_list_box = tk.Listbox(self._wads_frame, width=40, height=25)
         self._wads_list_box.pack()
 
-        # Update wads
-        self.__update_wads_list_box()
-
-    def __update_wads_list_box(self):
-        """
-        Update list of WAD files
-        :return: None
-        """
-        self._wads_list_box.delete(0, tk.END)
-        for wad_name in self._session.wads_handler.wads_dict.keys():
-            self._wads_list_box.insert(0, wad_name)
+    def __update_wads_handler(self, wads_path):
+        try:
+            self._session.wads_handler.read_wads_dict(wads_path)
+            self._wads_label.config(text=self._session.wads_handler.wads_path)
+        except FileNotFoundError:
+            tk.messagebox.showerror('Error!', 'WADs directory not found!')
+            self._wads_label.config(text='WADs directory not found!')
 
     def __choose_wads_directory_dialog(self):
         """
@@ -56,9 +53,19 @@ class WADsFrame(AbstractFrame):
         :return: None
         """
         wads_path = tk.filedialog.askdirectory()
-        self._session.update_wads_handler(wads_path)
-        self._wads_label.config(text=self._session.wads_handler.wads_path)
+        self.__update_wads_handler(wads_path)
         self._session.config.set_field('wads_path', wads_path)
         self._session.config.write_config()
+        self.update_wads_list_box()
 
-        self.__update_wads_list_box()
+    def update_wads_list_box(self):
+        """
+        Update list of WAD files
+        :return: None
+        """
+        wads_path = self._session.config.config_dict['wads_path']
+        self.__update_wads_handler(wads_path)
+
+        self._wads_list_box.delete(0, tk.END)
+        for wad_name in self._session.wads_handler.wads_dict.keys():
+            self._wads_list_box.insert(0, wad_name)

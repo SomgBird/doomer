@@ -1,3 +1,4 @@
+import json
 import tkinter as tk
 import tkinter.filedialog
 import tkinter.messagebox
@@ -45,7 +46,6 @@ class DoomsFrame(AbstractFrame):
         # List of Dooms
         self._dooms_list_box = tk.Listbox(self._dooms_frame, width=40, height=25)
         self._dooms_list_box.pack()
-        self.__update_dooms_list_box()
 
     def __add_doom_dialog(self):
         """
@@ -59,10 +59,10 @@ class DoomsFrame(AbstractFrame):
         doom_name = tk.simpledialog.askstring('test', 'test')
         if doom_name is None:
             return
-        
+
         self._session.dooms_handler.add_doom(name=doom_name, path=doom_path)
-        self._session.dooms_handler.write_dooms()
-        self.__update_dooms_list_box()
+        self._session.dooms_handler.write_dooms(self._session.config.config_dict['dooms_path'])
+        self.update_dooms_list_box()
 
     def __delete_doom_dialog(self):
         """
@@ -74,14 +74,21 @@ class DoomsFrame(AbstractFrame):
                 != 'yes':
             return
         self._session.dooms_handler.delete_doom(self.active_doom)
-        self._session.dooms_handler.write_dooms()
-        self.__update_dooms_list_box()
+        self._session.dooms_handler.write_dooms(self._session.config.config_dict['dooms_path'])
+        self.update_dooms_list_box()
 
-    def __update_dooms_list_box(self):
+    def update_dooms_list_box(self):
         """
         Update list of Doom ports
         :return: None
         """
+        try:
+            self._session.dooms_handler.read_dooms(self._session.config.config_dict['dooms_path'])
+        except FileNotFoundError:
+            tk.messagebox.showerror('Path error!', self._session.config.config_dict['dooms_path'] + ' was not found!')
+        except json.JSONDecodeError:
+            tk.messagebox.showerror('Error!', self._session.config.config_dict['dooms_path'] + ' is corrupted!')
+
         self._dooms_list_box.delete(0, tk.END)
         for doom_name in self._session.dooms_handler.dooms_dict.keys():
             self._dooms_list_box.insert(0, doom_name)

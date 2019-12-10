@@ -21,15 +21,6 @@ class Session:
         Session constructor
         """
         self._config = Config()
-
-        self._wads_handler = None
-        self.update_wads_handler()
-
-        self._dooms_handler = DoomsHandler(self._config.config_dict['dooms_path'])
+        self._wads_handler = WADsHandler()
+        self._dooms_handler = DoomsHandler()
         # TODO: add other handlers
-
-    def update_wads_handler(self, wads_path=None):
-        if wads_path is None:
-            self._wads_handler = WADsHandler(self._config.config_dict['wads_path'])
-        else:
-            self._wads_handler = WADsHandler(wads_path)

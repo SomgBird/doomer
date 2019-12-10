@@ -15,7 +15,6 @@ class Config:
         """
         self._config_path = path
         self._config_dict = None
-        self.read_config()
 
     def init_default_config(self):
         config_dict = dict()
@@ -43,3 +42,4 @@ class Config:
 
         with open(self._config_path, 'r') as config_file:
             self._config_dict = json.load(config_file)
+
