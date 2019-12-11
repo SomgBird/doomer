@@ -7,17 +7,21 @@ from pathlib_json import PathJSONDecoder, PathJSONEncoder
 class DoomsHandler:
     @property
     def dooms_dict(self):
+        """
+        :dict of all dooms
+        """
         return self._dooms_dict
 
     def __init__(self):
         """
-        DoomsHandler constructor/
+        DoomsHandler constructor
         """
         self._dooms_dict = dict()
 
     def write_dooms(self, path):
         """
         Write current Dooms to json file
+        :param path: path to file with dooms list
         :return:
         """
         with open(path, 'w') as dooms_file:
@@ -26,6 +30,7 @@ class DoomsHandler:
     def read_dooms(self, path):
         """
         Read dooms list from config
+        :param path: path to file with dooms list
         :return: None
         """
         with open(path, 'r') as dooms_file:

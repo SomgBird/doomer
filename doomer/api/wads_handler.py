@@ -6,14 +6,14 @@ class WADsHandler:
     @property
     def wads_dict(self):
         """
-        :return: dict of all WADs files
+        dict of all WADs files
         """
         return self._wads_dict
 
     @property
     def wads_path(self):
         """
-        :return: path to WADs directory
+        path to WADs directory
         """
         return self._wads_path
 
@@ -51,5 +51,10 @@ class WADsHandler:
             self._wads_dict[wad.name] = wad
 
     def read_wads_dict(self, path):
+        """
+        Create WADs dict from directory on path
+        :param path: path to WADs directory
+        :return:
+        """
         self._wads_path = Path(path)
         self.__set_wads_dict(os.listdir(self._wads_path))
