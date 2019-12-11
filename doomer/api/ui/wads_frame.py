@@ -41,7 +41,7 @@ class WADsFrame(AbstractFrame):
 
     def __update_wads_handler(self, wads_path):
         try:
-            self._session.wads_handler.read_wads_dict(wads_path)
+            self._session.wads_handler.read_files_dict(wads_path)
             self._wads_label.config(text=self._session.wads_handler.wads_path)
         except FileNotFoundError:
             tk.messagebox.showerror('Error!', 'WADs directory not found!')
