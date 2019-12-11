@@ -30,7 +30,7 @@ class ControlsFrame(AbstractFrame):
         Launch chosen Doom with user setup
         :return: None
         """
-        doom = self._session.dooms_handler.fspath_dict[self._dooms_frame.active_doom]
+        doom = self._session.dooms_handler.dooms_dict[self._dooms_frame.active_doom]
         chosen_wad = self._session.wads_handler.wads_dict[self._wads_frame.active_wad]
 
         launcher = Launcher(doom, chosen_wad)

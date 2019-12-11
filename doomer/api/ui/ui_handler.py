@@ -42,6 +42,10 @@ class UI:
             self._session.config.init_default_config()
             self._session.config.write_config()
             tk.messagebox.showerror('Error!', 'Could not load config file! Default configuration will be used.')
+        except KeyError:
+            self._session.config.init_default_config()
+            tk.messagebox.showinfo('Default settings!', 'It seems you use Doomer first time or your config file is '
+                                                        'corrupted. Doomer will load default config file.')
 
         self._wads_frame.update_wads_list_box()
         self._dooms_frame.update_dooms_list_box()

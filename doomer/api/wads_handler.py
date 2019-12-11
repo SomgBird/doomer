@@ -34,7 +34,7 @@ class WADsHandler:
 
         for file in files_list:
             if file.endswith('.wad') or file.endswith('.WAD'):
-                wads_list.append(self._wads_path / file)
+                wads_list.append(self._wads_path/file)
 
         return wads_list
 
