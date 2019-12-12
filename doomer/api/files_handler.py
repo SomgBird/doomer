@@ -1,6 +1,5 @@
-from abc import ABC, abstractmethod
-from pathlib import Path
 import os
+from pathlib import Path
 
 
 class FilesHandler:
@@ -29,7 +28,7 @@ class FilesHandler:
         for file in files_list:
             for ext in self._ext_list:
                 if file.endswith(ext):
-                    filtered_files.append(self._files_path/file)
+                    filtered_files.append(self._files_path / file)
 
         return filtered_files
 

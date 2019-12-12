@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.messagebox
 import tkinter.filedialog
 from abs_frame import AbstractFrame
+from pathlib import Path
 
 
 class FilesFrame(AbstractFrame):
@@ -17,7 +18,7 @@ class FilesFrame(AbstractFrame):
         """
         :return: path to chosen file
         """
-        return self._files_handler.files_dict[self.active_file]
+        return Path(self._files_handler.files_dict[self.active_file])
 
     def __init__(self, window, config, side, files_handler, name):
         """
@@ -31,7 +32,7 @@ class FilesFrame(AbstractFrame):
         self._name = name
 
         # files management frame
-        self._files_frame = tk.LabelFrame(self._window, text=self._name + 's')
+        self._files_frame = tk.LabelFrame(self._window, text=self._name)
         self._files_frame.pack(padx=10, pady=10, side=self._side)
 
         # Button to choose new files directory

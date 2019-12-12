@@ -4,6 +4,7 @@ import tkinter.filedialog
 import tkinter.messagebox
 import tkinter.simpledialog
 from abs_frame import AbstractFrame
+from pathlib import Path
 
 
 class DoomsFrame(AbstractFrame):
@@ -19,7 +20,7 @@ class DoomsFrame(AbstractFrame):
         """
         :return: chosen Doom port
         """
-        return self._dooms_handler.dooms_dict[self._dooms_list_box.get(tk.ACTIVE)]
+        return Path(self._dooms_handler.dooms_dict[self._dooms_list_box.get(tk.ACTIVE)])
 
     def __init__(self, window, config, side, dooms_handler):
         """

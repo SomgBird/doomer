@@ -31,5 +31,6 @@ class ControlsFrame(AbstractFrame):
         :return: None
         """
         Launcher(doom_path=self._dooms_frame.active_doom_path,
-                 wad_path=self._wads_frame.active_file_path
+                 wad_path=self._wads_frame.active_file_path,
+                 pk3_path=self._pk3_frame.active_file_path
                  ).launch()
