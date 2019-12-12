@@ -1,7 +1,7 @@
 import json
 import pathlib
 
-from pathlib_json import PathJSONDecoder, PathJSONEncoder
+from doomer.api.pathlib_json import PathJSONDecoder, PathJSONEncoder
 
 
 class DoomsHandler:

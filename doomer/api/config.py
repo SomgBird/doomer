@@ -1,7 +1,9 @@
 import json
 import os
+
 from pathlib import Path
-from pathlib_json import PathJSONEncoder, PathJSONDecoder
+
+from doomer.api.pathlib_json import PathJSONEncoder, PathJSONDecoder
 
 
 class Config:

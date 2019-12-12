@@ -2,13 +2,13 @@ import json
 import tkinter as tk
 import tkinter.messagebox
 
-from config import Config
-from files_handler import FilesHandler
-from dooms_handler import DoomsHandler
+from doomer.api.config import Config
+from doomer.api.files_handler import FilesHandler
+from doomer.api.dooms_handler import DoomsHandler
 
-from controls_frame import ControlsFrame
-from dooms_frame import DoomsFrame
-from files_frame import FilesFrame
+from doomer.api.ui.controls_frame import ControlsFrame
+from doomer.api.ui.dooms_frame import DoomsFrame
+from doomer.api.ui.files_frame import FilesFrame
 
 
 class UI:

@@ -1,6 +1,8 @@
 import tkinter as tk
-from abs_frame import AbstractFrame
-from launcher import Launcher
+
+from doomer.api.launcher import Launcher
+
+from doomer.api.ui.abs_frame import AbstractFrame
 
 
 class ControlsFrame(AbstractFrame):

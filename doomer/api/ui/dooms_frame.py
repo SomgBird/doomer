@@ -3,8 +3,10 @@ import tkinter as tk
 import tkinter.filedialog
 import tkinter.messagebox
 import tkinter.simpledialog
-from abs_frame import AbstractFrame
+
 from pathlib import Path
+
+from doomer.api.ui.abs_frame import AbstractFrame
 
 
 class DoomsFrame(AbstractFrame):

@@ -1,6 +1,6 @@
 import os
 
-from api.ui.ui_handler import UI
+from doomer.api.ui.ui_handler import UI
 
 DEFAULT_DIRS = [
     'wads',

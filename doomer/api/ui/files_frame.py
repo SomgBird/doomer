@@ -1,8 +1,10 @@
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.filedialog
-from abs_frame import AbstractFrame
+
 from pathlib import Path
+
+from doomer.api.ui.abs_frame import AbstractFrame
 
 
 class FilesFrame(AbstractFrame):
