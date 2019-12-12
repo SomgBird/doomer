@@ -14,14 +14,22 @@ class DoomsFrame(AbstractFrame):
         """
         return self._dooms_list_box.get(tk.ACTIVE)
 
-    def __init__(self, window, session, side):
+    @property
+    def active_doom_path(self):
+        """
+        :return: chosen Doom port
+        """
+        return self._dooms_handler.dooms_dict[self._dooms_list_box.get(tk.ACTIVE)]
+
+    def __init__(self, window, config, side, dooms_handler):
         """
         Dooms frame constructor
         :param window: frame layout window
-        :param session: Doomer session
+        :param config: Doomer config
         :param side: layout side
         """
-        super().__init__(window, session, side)
+        super().__init__(window, config, side)
+        self._dooms_handler = dooms_handler
 
         # Dooms management frame
         self._dooms_frame = tk.LabelFrame(self._window, text='Dooms')
@@ -60,8 +68,8 @@ class DoomsFrame(AbstractFrame):
         if doom_name is None:
             return
 
-        self._session.dooms_handler.add_doom(name=doom_name, path=doom_path)
-        self._session.dooms_handler.write_dooms(self._session.config.config_dict['dooms_path'])
+        self._dooms_handler.add_doom(name=doom_name, path=doom_path)
+        self._dooms_handler.write_dooms(self._config.config_dict['dooms_path'])
         self.update_dooms_list_box()
 
     def __delete_doom_dialog(self):
@@ -73,8 +81,8 @@ class DoomsFrame(AbstractFrame):
                                      'Are you really want to delete ' + str(self.active_doom) + ' from Doomer?') \
                 != 'yes':
             return
-        self._session.dooms_handler.delete_doom(self.active_doom)
-        self._session.dooms_handler.write_dooms(self._session.config.config_dict['dooms_path'])
+        self._dooms_handler.delete_doom(self.active_doom)
+        self._dooms_handler.write_dooms(self._config.config_dict['dooms_path'])
         self.update_dooms_list_box()
 
     def update_dooms_list_box(self):
@@ -83,12 +91,12 @@ class DoomsFrame(AbstractFrame):
         :return: None
         """
         try:
-            self._session.dooms_handler.read_dooms(self._session.config.config_dict['dooms_path'])
+            self._dooms_handler.read_dooms(self._config.config_dict['dooms_path'])
         except FileNotFoundError:
-            tk.messagebox.showerror('Path error!', self._session.config.config_dict['dooms_path'] + ' was not found!')
+            tk.messagebox.showerror('Path error!', self._config.config_dict['dooms_path'] + ' was not found!')
         except json.JSONDecodeError:
-            tk.messagebox.showerror('Error!', self._session.config.config_dict['dooms_path'] + ' is corrupted!')
+            tk.messagebox.showerror('Error!', self._config.config_dict['dooms_path'] + ' is corrupted!')
 
         self._dooms_list_box.delete(0, tk.END)
-        for doom_name in self._session.dooms_handler.dooms_dict.keys():
+        for doom_name in self._dooms_handler.dooms_dict.keys():
             self._dooms_list_box.insert(0, doom_name)

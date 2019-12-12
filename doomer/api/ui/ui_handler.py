@@ -4,7 +4,7 @@ import tkinter.messagebox
 from controls_frame import ControlsFrame
 from dooms_frame import DoomsFrame
 from session import Session
-from wads_frame import WADsFrame
+from files_frame import FilesFrame
 
 
 class UI:
@@ -13,7 +13,6 @@ class UI:
         UI Constructor
         :param session: Doomer session
         """
-
         # Main windows init
         self._session = session
         self._main_window = tk.Tk()
@@ -25,11 +24,21 @@ class UI:
         self._setup_frame.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=10)
 
         # Launcher setup frames
-        self._wads_frame = WADsFrame(self._setup_frame, self._session, tk.LEFT)
-        self._dooms_frame = DoomsFrame(self._setup_frame, self._session, tk.RIGHT)
+        self._wads_frame = FilesFrame(
+            window=self._setup_frame,
+            config=self._session.config,
+            side=tk.LEFT,
+            files_handler=self._session.wads_handler,
+            name='WADs'
+        )
+        self._dooms_frame = DoomsFrame(
+            window=self._setup_frame,
+            config=self._session.config,
+            side=tk.RIGHT,
+            dooms_handler=self._session.dooms_handler)
         self._controls_frame = ControlsFrame(
             window=self._main_window,
-            session=self._session,
+            config=self._session.config,
             side=tk.TOP,
             dooms_frame=self._dooms_frame,
             wads_frame=self._wads_frame,
@@ -47,6 +56,6 @@ class UI:
             tk.messagebox.showinfo('Default settings!', 'It seems you are using Doomer first time or your config file '
                                                         'is corrupted. Doomer will load default config file.')
 
-        self._wads_frame.update_wads_list_box()
+        self._wads_frame.update_files_list_box()
         self._dooms_frame.update_dooms_list_box()
         self._main_window.mainloop()

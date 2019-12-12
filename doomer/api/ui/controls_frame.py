@@ -4,17 +4,17 @@ from launcher import Launcher
 
 
 class ControlsFrame(AbstractFrame):
-    def __init__(self, window, session, side, dooms_frame, wads_frame, pk3_frame):
+    def __init__(self, window, config, side, dooms_frame, wads_frame, pk3_frame):
         """
         Controls frame constructor
         :param window: frame layout window
-        :param session: Doomer session
+        :param config: Doomer config
         :param side: layout side
         :param dooms_frame: doom ports frame
         :param wads_frame: WAD files list frame
         :param pk3_frame: PK3 files list frame
         """
-        super().__init__(window, session, side)
+        super().__init__(window, config, side)
         self._dooms_frame = dooms_frame
         self._wads_frame = wads_frame
         self._pk3_frame = pk3_frame
@@ -30,6 +30,6 @@ class ControlsFrame(AbstractFrame):
         Launch chosen Doom with user setup
         :return: None
         """
-        Launcher(doom_path=self._session.dooms_handler.dooms_dict[self._dooms_frame.active_doom],
-                 wad_path=self._session.wads_handler.wads_dict[self._wads_frame.active_wad]
+        Launcher(doom_path=self._dooms_frame.active_doom_path,
+                 wad_path=self._wads_frame.active_file_path
                  ).launch()

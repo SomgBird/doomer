@@ -3,8 +3,21 @@ from pathlib import Path
 import os
 
 
-class FilesHandler(ABC):
-    @abstractmethod
+class FilesHandler:
+    @property
+    def files_dict(self):
+        """
+        dict of all files files
+        """
+        return self._files_dict
+
+    @property
+    def files_path(self):
+        """
+        path to files directory
+        """
+        return self._files_path
+
     def __init__(self, ext_list):
         self._files_path = None
         self._files_dict = dict()
