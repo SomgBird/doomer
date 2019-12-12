@@ -33,3 +33,4 @@ class Launcher:
             launch_command.append(f'\"{self._wad_path}\"')
 
         subprocess.Popen(' '.join(launch_command))
+        #os.system(' '.join(launch_command))

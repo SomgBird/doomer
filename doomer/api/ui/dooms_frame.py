@@ -15,14 +15,19 @@ class DoomsFrame(AbstractFrame):
         """
         :return: chosen Doom port
         """
-        return self._dooms_list_box.get(tk.ACTIVE)
+        if len(self._dooms_list_box.curselection()) != 0:
+            return self._dooms_list_box.get(self._dooms_list_box.curselection())
+        return None
 
     @property
     def active_doom_path(self):
         """
         :return: chosen Doom port
         """
-        return Path(self._dooms_handler.dooms_dict[self._dooms_list_box.get(tk.ACTIVE)])
+        active = self._dooms_handler.dooms_dict.get(self._dooms_list_box.get(tk.ACTIVE), None)
+        if active is not None:
+            return Path(active)
+        return None
 
     def __init__(self, window, config, side, dooms_handler):
         """
@@ -55,7 +60,13 @@ class DoomsFrame(AbstractFrame):
         self._delete_doom_button.pack(side=tk.RIGHT, padx=5, pady=5)
 
         # List of Dooms
-        self._dooms_list_box = tk.Listbox(self._dooms_frame, width=40, height=25)
+        self._dooms_list_box = tk.Listbox(
+            self._dooms_frame,
+            width=40,
+            height=25,
+            selectmode=tk.SINGLE,
+            exportselection=False
+        )
         self._dooms_list_box.pack()
 
     def __add_doom_dialog(self):

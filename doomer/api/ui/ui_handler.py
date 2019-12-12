@@ -51,6 +51,8 @@ class UI:
             side=tk.LEFT,
             dooms_handler=self._dooms_handler
         )
+
+        # Controls frame
         self._controls_frame = ControlsFrame(
             window=self._main_window,
             config=self._config,
@@ -74,4 +76,5 @@ class UI:
         self._wads_frame.update_files_list_box()
         self._pk3_frame.update_files_list_box()
         self._dooms_frame.update_dooms_list_box()
+
         self._main_window.mainloop()
