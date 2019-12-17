@@ -29,6 +29,7 @@ class FilesHandler:
             for ext in self._ext_list:
                 if file.endswith(ext):
                     filtered_files.append(self._files_path / file)
+                    break
 
         return filtered_files
 
