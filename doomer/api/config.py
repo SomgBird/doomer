@@ -1,7 +1,9 @@
 import json
 import os
+
 from pathlib import Path
-from pathlib_json import PathJSONEncoder, PathJSONDecoder
+
+from doomer.api.pathlib_json import PathJSONEncoder, PathJSONDecoder
 
 
 class Config:
@@ -20,7 +22,7 @@ class Config:
     def init_default_config(self):
         config_dict = dict()
         config_dict['wads_path'] = Path('./wads')
-        config_dict['pk3_path'] = Path('./pk3s')
+        config_dict['pk3s_path'] = Path('./pk3s')
         config_dict['saves_path'] = Path('./saves')
         config_dict['screenshots_path'] = Path('./screenshots')
         config_dict['configs_path'] = Path('./configs')

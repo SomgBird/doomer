@@ -6,6 +6,7 @@ from pathlib import Path
 CASES_PATH = Path('D:/Dev/doomer/doomer/tests/test_api/wads_handler_cases/')
 
 
+# TODO: rework test
 @ddt
 class TestWADsHandler(TestCase):
     @data(

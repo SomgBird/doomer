@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 
 class Launcher:
@@ -25,8 +26,11 @@ class Launcher:
         launch_command = []
 
         if self._doom_path is not None:
-            launch_command.append(str(self._doom_path))
+            launch_command.append(f'\"{self._doom_path}\"')
+        if self._pk3_path is not None:
+            launch_command.append(f'\"{self._pk3_path}\"')
         if self._wad_path is not None:
-            launch_command.append(str(self._wad_path))
+            launch_command.append(f'\"{self._wad_path}\"')
 
-        os.system(' '.join(launch_command))
+        subprocess.Popen(' '.join(launch_command))
+        #os.system(' '.join(launch_command))
