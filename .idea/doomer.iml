@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/doomer/api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/doomer/api/ui" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/doomer/api/exceptions" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/doomer/api/ui_qt" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

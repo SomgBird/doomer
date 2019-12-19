@@ -1,6 +1,8 @@
 import os
-
-from doomer.api.ui.ui_handler import UI
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget
+#from doomer.api.ui.ui_handler import UI
+from doomer.api.ui_qt.ui_handler import UI
 
 DEFAULT_DIRS = [
     'wads',
@@ -21,4 +23,9 @@ def init_default_directories():
 def run():
     init_default_directories()
 
+    app = QApplication([])
+
     app_ui = UI()
+    app_ui.show()
+
+    sys.exit(app.exec_())
