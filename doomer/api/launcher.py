@@ -27,11 +27,11 @@ class Launcher:
 
         if self._doom_path is not None:
             launch_command.append(str(self._doom_path))
-        if self._wad_path is not None:
-            launch_command.append('-iwad')
-            launch_command.append(str(self._wad_path))
+
+        launch_command.append('-file')
         if self._pk3_path is not None:
-            launch_command.append('-file')
             launch_command.append(str(self._pk3_path))
+        if self._wad_path is not None:
+            launch_command.append(str(self._wad_path))
 
         subprocess.Popen(launch_command)

@@ -15,9 +15,10 @@ class UI(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # TODO: Разделить выбор IWAD и WAD/PK3
         self._config = Config()
-        self._wads_handler = FilesHandler(['wad', 'WAD'])
-        self._pk3_handler = FilesHandler(['pk3'])
+        self._iwad_handler = FilesHandler({'wad': b'IWAD', 'WAD': b'IWAD'})
+        self._file_handler = FilesHandler({'pk3': b'PK', 'wad': b'PWAD', 'WAD': b'PWAD'})
         self._dooms_handler = DoomsHandler()
 
         self.resize(800, 650)
@@ -27,12 +28,12 @@ class UI(QMainWindow):
         self._setup_layout = QHBoxLayout()
         self._wads_widget = FilesWidget(
                 config=self._config,
-                files_handler=self._wads_handler,
+                files_handler=self._iwad_handler,
                 name='WADs'
         )
         self._pk3_widget = FilesWidget(
                 config=self._config,
-                files_handler=self._pk3_handler,
+                files_handler=self._file_handler,
                 name='PK3s'
         )
 
