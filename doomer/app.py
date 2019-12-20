@@ -5,8 +5,8 @@ from PyQt5.QtWidgets import QApplication, QWidget
 from doomer.api.ui_qt.ui_handler import UI
 
 DEFAULT_DIRS = [
-    'wads',
-    'pk3s',
+    'iwads',
+    'files',
     'saves',
     'screenshots',
     'configs',

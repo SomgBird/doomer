@@ -21,7 +21,8 @@ class Config:
 
     def init_default_config(self):
         config_dict = dict()
-        config_dict['wads_path'] = Path('./wads')
+        config_dict['iwads_path'] = Path('./iwads')
+        config_dict['pwads_path'] = Path('./pwads')
         config_dict['pk3s_path'] = Path('./pk3s')
         config_dict['saves_path'] = Path('./saves')
         config_dict['screenshots_path'] = Path('./screenshots')
@@ -40,9 +41,6 @@ class Config:
             json.dump(self._config_dict, config_file, cls=PathJSONEncoder, indent=4)
 
     def read_config(self):
-        if not os.path.exists(self._config_path):
-            self.init_default_config()
-
         with open(self._config_path, 'r') as config_file:
             self._config_dict = json.load(config_file, cls=PathJSONDecoder)
 

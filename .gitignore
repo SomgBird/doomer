@@ -109,8 +109,8 @@ config.json
 dooms.json
 
 configs/
-wads/
+iwads/
 dooms/
-pk3s/
+files/
 screenshots/
 saves/

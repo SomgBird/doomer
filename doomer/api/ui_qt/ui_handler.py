@@ -1,6 +1,7 @@
 import sys
 import json
-from PyQt5.QtWidgets import QApplication, QWidget, QFrame, QGridLayout, QMainWindow, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QFrame, QGridLayout, QMainWindow, QHBoxLayout, QErrorMessage, \
+    QMessageBox, QAbstractItemView
 
 from doomer.api.config import Config
 from doomer.api.files_handler import FilesHandler
@@ -15,30 +16,41 @@ class UI(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # TODO: Разделить выбор IWAD и WAD/PK3
         self._config = Config()
-        self._iwad_handler = FilesHandler({'wad': b'IWAD', 'WAD': b'IWAD'})
-        self._file_handler = FilesHandler({'pk3': b'PK', 'wad': b'PWAD', 'WAD': b'PWAD'})
+        self._iwads_handler = FilesHandler({'wad': b'IWAD', 'WAD': b'IWAD'})
+        self._pwads_handler = FilesHandler({'wad': b'PWAD', 'WAD': b'PWAD'})
+        self._pk3s_handler = FilesHandler({'pk3': b'PK'})
         self._dooms_handler = DoomsHandler()
 
         self.resize(800, 650)
         self.setWindowTitle('Doomer')
-
         self._main_layout = QHBoxLayout()
         self._setup_layout = QHBoxLayout()
-        self._wads_widget = FilesWidget(
-                config=self._config,
-                files_handler=self._iwad_handler,
-                name='WADs'
+        self._iwads_widget = FilesWidget(
+            config=self._config,
+            files_handler=self._iwads_handler,
+            name='IWADs',
+            files_key='iwads_path',
+            selection_mode=QAbstractItemView.SingleSelection
         )
-        self._pk3_widget = FilesWidget(
-                config=self._config,
-                files_handler=self._file_handler,
-                name='PK3s'
+        self._pwads_widget = FilesWidget(
+            config=self._config,
+            files_handler=self._pwads_handler,
+            name='PWADs',
+            files_key='pwads_path',
+            selection_mode=QAbstractItemView.ExtendedSelection
+        )
+        self._pk3s_widget = FilesWidget(
+            config=self._config,
+            files_handler=self._pk3s_handler,
+            name='PK3s',
+            files_key='pk3s_path',
+            selection_mode=QAbstractItemView.ExtendedSelection
         )
 
-        self._setup_layout.addWidget(self._wads_widget)
-        self._setup_layout.addWidget(self._pk3_widget)
+        self._setup_layout.addWidget(self._iwads_widget)
+        self._setup_layout.addWidget(self._pwads_widget)
+        self._setup_layout.addWidget(self._pk3s_widget)
         self._main_layout.addLayout(self._setup_layout)
 
         self._main_widget = QWidget()
@@ -47,24 +59,17 @@ class UI(QMainWindow):
 
         try:
             self._config.read_config()
-        except json.JSONDecodeError:
+        except json.JSONDecodeError or KeyError:
             self._config.init_default_config()
             self._config.write_config()
-            # tk.messagebox.showerror('Error!', 'Could not load config file! Default configuration will be used.')
-        except KeyError:
+            error_dialog = QErrorMessage()
+            error_dialog.showMessage('Error!', 'Could not load config file! Default configuration will be used.')
+        except FileNotFoundError:
             self._config.init_default_config()
-            # tk.messagebox.showinfo('Default settings!', 'It seems you are using Doomer first time or your config file '
-            #                                             'is corrupted. Doomer will load default config file.')
+            info_dialog = QMessageBox()
+            info_dialog.about(self, 'Default settings!', 'It seems you are using Doomer first time or your config file '
+                                                         'is corrupted. Doomer will load default config file.')
 
-        self._wads_widget.update_files_listbox()
-        self._pk3_widget.update_files_listbox()
-
-
-        # self._wads_frame = FilesFrame(
-        #     window=self._main_window,
-        #     config=self._config,
-        #     side=1,
-        #     files_handler=self._wads_handler,
-        #     name='WADs'
-        # )
-
+        self._iwads_widget.update_files_listbox()
+        self._pwads_widget.update_files_listbox()
+        self._pk3s_widget.update_files_listbox()
