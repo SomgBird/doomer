@@ -37,15 +37,17 @@ class FilesWidget(QWidget):
         self._buttons_layout.addWidget(self._choose_files_dir_button)
 
         # Clear selection button
-        self._clear_selection_button = QPushButton('Clear selection', self)
-        self._clear_selection_button.setMinimumHeight(40)
-        self._clear_selection_button.clicked.connect(self.__clear_selection)
-        self._buttons_layout.addWidget(self._clear_selection_button)
+        if self._selection_mode == QAbstractItemView.ExtendedSelection:
+            self._clear_selection_button = QPushButton('Clear selection', self)
+            self._clear_selection_button.setMinimumHeight(40)
+            self._clear_selection_button.clicked.connect(self.__clear_selection)
+            self._buttons_layout.addWidget(self._clear_selection_button)
 
         self._files_layout.addLayout(self._buttons_layout)
 
         # Files path label
         self._path_label = QLabel()
+        self._path_label.setMaximumWidth(200)
         self._files_layout.addWidget(self._path_label)
 
         # Files list
@@ -93,3 +95,4 @@ class FilesWidget(QWidget):
         self._files_listbox.clear()
         for wad_name in self._files_handler.files_dict.keys():
             self._files_listbox.insertItem(0, wad_name)
+        self._files_listbox.sortItems()

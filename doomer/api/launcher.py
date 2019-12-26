@@ -1,20 +1,12 @@
-import os
 import subprocess
 
 
 class Launcher:
-    def __init__(self, doom_path, wad_path, pk3_path=None, saves_path=None, config_path=None):
-        """
-        Launcher constructor
-        :param doom_path: path to Doom
-        :param wad_path: path to WAD file to launch
-        :param pk3_path: path to pk3 file to launch
-        :param saves_path: path to save files directory
-        :param config_path: path to configuration file
-        """
+    def __init__(self, doom_path, iwad_path, pwads_path=None, pk3s_path=None, saves_path=None, config_path=None):
         self._doom_path = doom_path
-        self._wad_path = wad_path
-        self._pk3_path = pk3_path
+        self._iwad_path = iwad_path
+        self._pwads_path = pwads_path
+        self._pk3s_path = pk3s_path
         self._saves_path = saves_path
         self._config_path = config_path
 
@@ -27,11 +19,22 @@ class Launcher:
 
         if self._doom_path is not None:
             launch_command.append(str(self._doom_path))
+        else:
+            raise FileNotFoundError
+
+        launch_command.append('-iwad')
+        if self._iwad_path is not None:
+            launch_command.append(str(self._iwad_path))
+        else:
+            raise FileNotFoundError
 
         launch_command.append('-file')
-        if self._pk3_path is not None:
-            launch_command.append(str(self._pk3_path))
-        if self._wad_path is not None:
-            launch_command.append(str(self._wad_path))
+        if self._pwads_path is not None and self._pwads_path != []:
+            for pwad in self._pwads_path:
+                launch_command.append(str(pwad))
+
+        if self._pk3s_path is not None and self._pk3s_path != []:
+            for pk3 in self._pk3s_path:
+                launch_command.append(str(pk3))
 
         subprocess.Popen(launch_command)
