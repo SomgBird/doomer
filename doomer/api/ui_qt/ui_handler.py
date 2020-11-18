@@ -17,9 +17,9 @@ class UI(QMainWindow):
         super().__init__()
 
         self._config = Config()
-        self._iwads_handler = FilesHandler({'wad': b'IWAD', 'WAD': b'IWAD'})
-        self._pwads_handler = FilesHandler({'wad': b'PWAD', 'WAD': b'PWAD'})
-        self._pk3s_handler = FilesHandler({'pk3': b'PK'})
+        self._iwads_handler = FilesHandler({'wad': [b'IWAD'], 'WAD': [b'IWAD']})
+        self._pwads_handler = FilesHandler({'wad': [b'PWAD'], 'WAD': [b'PWAD']})
+        self._pk3s_handler = FilesHandler({'pk3': [b'PK']})
         self._dooms_handler = DoomsHandler()
 
         self.resize(800, 650)

@@ -23,14 +23,15 @@ class FilesHandler:
         self._filter_config = filter_config
 
     @staticmethod
-    def __check_header(file, header):
+    def __check_header(file, headers):
         with open(file, 'rb') as file_bytes:
-            if file_bytes.read(len(header)) == header:
-                return True
+            for h in headers:
+                if file_bytes.read(len(h)) in headers:
+                    return True
         return False
 
-    def __filter_func(self, file, ext, header):
-        if file.endswith(ext) and FilesHandler.__check_header(self._files_path/file, header):
+    def __filter_func(self, file, ext, headers):
+        if file.endswith(ext) and FilesHandler.__check_header(self._files_path/file, headers):
             return True
         return False
 
