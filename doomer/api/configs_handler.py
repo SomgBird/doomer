@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 
-class ConfigHandler:
+class ConfigsHandler:
     @property
     def configs_dict(self):
         return self._configs_dict
@@ -22,3 +22,6 @@ class ConfigHandler:
     def read_configs_dict(self, path):
         self._configs_path = Path(path)
         self.__set_files_dict(os.listdir(self._configs_path))
+
+    def get_config(self, name):
+        return self._configs_dict.get(name, None)

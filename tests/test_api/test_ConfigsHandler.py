@@ -2,7 +2,7 @@ import filecmp
 import json
 from unittest import TestCase
 from ddt import ddt, data, unpack
-from doomer.api.configs_handler import ConfigHandler
+from doomer.api.configs_handler import ConfigsHandler
 from pathlib import Path
 
 from pathlib_json import PathJSONDecoder
@@ -29,6 +29,6 @@ class TestConfigsHandler(TestCase):
     )
     @unpack
     def test_read_configs_dict(self, path, expected):
-        configs_handler = ConfigHandler()
+        configs_handler = ConfigsHandler()
         configs_handler.read_configs_dict(path)
         self.assertEqual(expected, configs_handler.configs_dict)

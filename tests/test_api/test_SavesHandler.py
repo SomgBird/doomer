@@ -34,19 +34,38 @@ class TestSavesHandler(TestCase):
 
     @data(
         (CASES_PATH / 'get_existed_dir', '1',
-        {
-            '1': CASES_PATH / 'get_existed_dir/1',
-            '2': CASES_PATH / 'get_existed_dir/2',
-            '3': CASES_PATH / 'get_existed_dir/3'
-        },
-        ['1', '2', '3'])
+         {
+             '1': CASES_PATH / 'get_existed_dir/1',
+             '2': CASES_PATH / 'get_existed_dir/2',
+             '3': CASES_PATH / 'get_existed_dir/3'
+         },
+         ['1', '2', '3'])
     )
     @unpack
     def test_get_saves_dict(self, path, d, expected_dict, expected_dirs):
         saves_handler = SavesHandler()
         saves_handler.read_saves_dict(path)
         result = saves_handler.get_saves_dir(d)
-        self.assertEqual(result, CASES_PATH / 'get_existed_dir/1')
+        self.assertEqual(result, CASES_PATH / 'get_existed_dir' / d)
         self.assertEqual(expected_dict, saves_handler.saves_dict)
         self.assertEqual(expected_dirs, [file for file in os.listdir(path) if os.path.isdir(path / file)])
 
+    @data(
+        (CASES_PATH / 'get_non-existed_dir', '4',
+         {
+             '1': CASES_PATH / 'get_non-existed_dir/1',
+             '2': CASES_PATH / 'get_non-existed_dir/2',
+             '3': CASES_PATH / 'get_non-existed_dir/3',
+             '4': CASES_PATH / 'get_non-existed_dir/4'
+         },
+         ['1', '2', '3', '4'])
+    )
+    @unpack
+    def test_get_new_saves_dict(self, path, d, expected_dict, expected_dirs):
+        saves_handler = SavesHandler()
+        saves_handler.read_saves_dict(path)
+        result = saves_handler.get_saves_dir(d)
+        self.assertEqual(result, CASES_PATH / 'get_non-existed_dir' / d)
+        self.assertEqual(expected_dict, saves_handler.saves_dict)
+        self.assertEqual(expected_dirs, [file for file in os.listdir(path) if os.path.isdir(path / file)])
+        os.rmdir(CASES_PATH / 'get_non-existed_dir' / d)
