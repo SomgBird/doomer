@@ -176,6 +176,77 @@ class InttestLauncher(TestCase):
              '-config',
              str(CASES_PATH / 'optional/conf_save/zdoom.exe_DOOM.WAD_PB_Allow_SV_Cheats.pk3.ini')
          ]),
+        # Multiple PWAD
+        (CASES_PATH / 'optional/dooms.json',
+         CASES_PATH / 'optional/iwads',
+         CASES_PATH / 'optional/conf_save',
+         CASES_PATH / 'optional/conf_save',
+         'zdoom.exe', 'DOOM.WAD',
+         CASES_PATH / 'optional/pwads',
+         ['ATTACK.WAD', 'BLOODSEA.WAD'],
+         CASES_PATH / 'optional/pk3s',
+         [],
+         [
+             ZDOOM_PATH,
+             '-iwad',
+             str(CASES_PATH / 'optional/iwads/DOOM.WAD'),
+             '-file',
+             str(CASES_PATH / 'optional/pwads/ATTACK.WAD'),
+             str(CASES_PATH / 'optional/pwads/BLOODSEA.WAD'),
+             '-savedir',
+             str(CASES_PATH / 'optional/conf_save/zdoom.exe_DOOM.WAD_ATTACK.WAD_BLOODSEA.WAD'),
+             '-config',
+             str(CASES_PATH / 'optional/conf_save/zdoom.exe_DOOM.WAD_ATTACK.WAD_BLOODSEA.WAD.ini')
+         ]),
+        # Multiple PK3s
+        (CASES_PATH / 'optional/dooms.json',
+         CASES_PATH / 'optional/iwads',
+         CASES_PATH / 'optional/conf_save',
+         CASES_PATH / 'optional/conf_save',
+         'zdoom.exe', 'DOOM.WAD',
+         CASES_PATH / 'optional/pwads',
+         [],
+         CASES_PATH / 'optional/pk3s',
+         ['PB_Allow_SV_Cheats.pk3', 'GoldenSouls_Full_1.4.pk3'],
+         [
+             ZDOOM_PATH,
+             '-iwad',
+             str(CASES_PATH / 'optional/iwads/DOOM.WAD'),
+             '-file',
+             str(CASES_PATH / 'optional/pk3s/PB_Allow_SV_Cheats.pk3'),
+             str(CASES_PATH / 'optional/pk3s/GoldenSouls_Full_1.4.pk3'),
+             '-savedir',
+             str(CASES_PATH / 'optional/conf_save/zdoom.exe_DOOM.WAD_PB_Allow_SV_Cheats.pk3_GoldenSouls_Full_1.4.pk3'),
+             '-config',
+             str(CASES_PATH / 'optional/conf_save/zdoom.exe_DOOM.WAD_PB_Allow_SV_Cheats.pk3_GoldenSouls_Full_1.4.pk3'
+                              '.ini')
+         ]),
+        # Multiple PWADS and PK3s
+        (CASES_PATH / 'optional/dooms.json',
+         CASES_PATH / 'optional/iwads',
+         CASES_PATH / 'optional/conf_save',
+         CASES_PATH / 'optional/conf_save',
+         'zdoom.exe', 'DOOM.WAD',
+         CASES_PATH / 'optional/pwads',
+         ['ATTACK.WAD', 'BLOODSEA.WAD'],
+         CASES_PATH / 'optional/pk3s',
+         ['PB_Allow_SV_Cheats.pk3', 'GoldenSouls_Full_1.4.pk3'],
+         [
+             ZDOOM_PATH,
+             '-iwad',
+             str(CASES_PATH / 'optional/iwads/DOOM.WAD'),
+             '-file',
+             str(CASES_PATH / 'optional/pwads/ATTACK.WAD'),
+             str(CASES_PATH / 'optional/pwads/BLOODSEA.WAD'),
+             str(CASES_PATH / 'optional/pk3s/PB_Allow_SV_Cheats.pk3'),
+             str(CASES_PATH / 'optional/pk3s/GoldenSouls_Full_1.4.pk3'),
+             '-savedir',
+             str(CASES_PATH / 'optional/conf_save/zdoom.exe_DOOM.WAD_ATTACK.WAD_BLOODSEA.WAD_PB_Allow_SV_Cheats'
+                              '.pk3_GoldenSouls_Full_1.4.pk3'),
+             '-config',
+             str(CASES_PATH / 'optional/conf_save/zdoom.exe_DOOM.WAD_ATTACK.WAD_BLOODSEA.WAD_PB_Allow_SV_Cheats'
+                              '.pk3_GoldenSouls_Full_1.4.pk3.ini')
+         ]),
     )
     @unpack
     def test_optional(self, dooms_path, iwads_path, saves_path, configs_path, doom_name, iwad_name,
