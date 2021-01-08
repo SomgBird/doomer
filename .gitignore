@@ -114,3 +114,4 @@ dooms/
 files/
 screenshots/
 saves/
+/tests/test_api/pathlib_json_cases/out/result.json
