@@ -24,24 +24,34 @@ class FilesHandler:
 
     @staticmethod
     def __check_header(file, headers):
-        with open(file, 'rb') as file_bytes:
-            for h in headers:
-                if file_bytes.read(len(h)) in headers:
-                    return True
-        return False
+        try:
+            if os.path.isfile(file):
+                with open(file, 'rb') as file_bytes:
+                    for h in headers:
+                        try:
+                            h_idx = headers.index(file_bytes.read(len(h)))
+                        except ValueError:
+                            continue
+                        return headers[h_idx]
+            return None
+        except PermissionError:
+            print("Cannot read file! Permission Error!")
+            return None
 
     def __filter_func(self, file, ext, headers):
-        if file.endswith(ext) and FilesHandler.__check_header(self._files_path/file, headers):
-            return True
-        return False
+        h = FilesHandler.__check_header(self._files_path / file, headers)
+        if file.endswith(ext) and h is not None:
+            return h
+        return None
 
     def __filter_files(self, files_list):
         filtered_files = []
 
         for file in files_list:
             for ext in self._filter_config.keys():
-                if self.__filter_func(file, str(ext), self._filter_config[ext]):
-                    filtered_files.append(self._files_path/file)
+                h = self.__filter_func(file, str(ext), self._filter_config[ext])
+                if h is not None:
+                    filtered_files.append(self._files_path / file)
                     break
 
         return filtered_files

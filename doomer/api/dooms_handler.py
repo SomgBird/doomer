@@ -25,7 +25,7 @@ class DoomsHandler:
         :return:
         """
         with open(path, 'w') as dooms_file:
-            json.dump(self._dooms_dict, dooms_file, cls=PathJSONEncoder, indent=4)
+            json.dump(self._dooms_dict, dooms_file, cls=PathJSONEncoder)
 
     def read_dooms(self, path):
         """

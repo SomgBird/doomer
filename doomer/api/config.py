@@ -18,6 +18,9 @@ class Config:
         """
         self._config_path = path
         self._config_dict = None
+        self._default_len = 7
+        self._default_fields = ['iwads_path', 'pwads_path', 'pk3s_path', 'saves_path',
+                                'screenshots_path', 'configs_path', 'dooms_path']
 
     def init_default_config(self):
         config_dict = dict()
@@ -30,7 +33,6 @@ class Config:
         config_dict['dooms_path'] = Path('./dooms.json')
 
         self._config_dict = config_dict
-        self.write_config()
 
     def set_field(self, name, value):
         if name in self._config_dict.keys():
@@ -38,12 +40,16 @@ class Config:
 
     def write_config(self):
         with open(self._config_path, 'w') as config_file:
-            json.dump(self._config_dict, config_file, cls=PathJSONEncoder, indent=4)
+            json.dump(self._config_dict, config_file, cls=PathJSONEncoder)
 
     def read_config(self):
         with open(self._config_path, 'r') as config_file:
             self._config_dict = json.load(config_file, cls=PathJSONDecoder)
 
-        if len(self._config_dict.keys()) == 0:
+        if len(self._config_dict.keys()) != self._default_len:
             raise KeyError('Config file is corrupted!')
+
+        for name in self._default_fields:
+            if name not in self._config_dict.keys():
+                raise KeyError('Config file is corrupted!')
 

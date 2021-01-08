@@ -29,8 +29,9 @@ class FilesWidget(QWidget):
         self._files_layout = QVBoxLayout()
 
         # Buttons
-        # Choose files directory button
         self._buttons_layout = QHBoxLayout()
+
+        # Choose files directory button
         self._choose_files_dir_button = QPushButton('Choose ' + name + ' directory', self)
         self._choose_files_dir_button.setMinimumHeight(40)
         self._choose_files_dir_button.clicked.connect(self.__choose_files_directory_dialog)
@@ -83,6 +84,7 @@ class FilesWidget(QWidget):
             error_dialog = QErrorMessage()
             error_dialog.showMessage(self._name + ' directory not found!')
             self._path_label.setText(self._name + ' directory not found!')
+            error_dialog.exec_()
 
     def update_files_listbox(self):
         """

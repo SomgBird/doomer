@@ -6,8 +6,7 @@ from doomer.api.ui_qt.ui_handler import UI
 
 DEFAULT_DIRS = [
     'iwads',
-    'pwads',
-    'pk3s',
+    'files',
     'saves',
     'screenshots',
     'configs',
