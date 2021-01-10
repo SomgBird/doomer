@@ -6,14 +6,15 @@ from PyQt5.QtWidgets import QApplication, QWidget, QFrame, QGridLayout, QMainWin
     QMessageBox, QAbstractItemView, QPushButton, QVBoxLayout
 from PyQt5.QtCore import Qt
 
+from configs_handler import ConfigsHandler
 from doomer.api.config import Config
 from doomer.api.files_handler import FilesHandler
 from doomer.api.dooms_handler import DoomsHandler
 
-from doomer.api.ui.controls_frame import ControlsFrame
-from doomer.api.ui.dooms_frame import DoomsFrame
 from doomer.api.ui_qt.files_widget import FilesWidget
 from dooms_widget import DoomsWidget
+from launcher import Launcher
+from saves_handler import SavesHandler
 
 
 class UI(QMainWindow):
@@ -21,10 +22,20 @@ class UI(QMainWindow):
         super().__init__()
 
         self._config = Config()
+        self._dooms_handler = DoomsHandler()
         self._iwads_handler = FilesHandler({'wad': [b'IWAD'], 'WAD': [b'IWAD']})
         self._pwads_handler = FilesHandler({'wad': [b'PWAD'], 'WAD': [b'PWAD']})
         self._pk3s_handler = FilesHandler({'pk3': [b'PK']})
-        self._dooms_handler = DoomsHandler()
+        self._saves_handler = SavesHandler()
+        self._configs_handler = ConfigsHandler()
+        self._launcher = Launcher(
+            self._dooms_handler,
+            self._iwads_handler,
+            self._pwads_handler,
+            self._pk3s_handler,
+            self._saves_handler,
+            self._configs_handler
+        )
 
         self.setFixedSize(800, 650)
         self.setWindowTitle('Doomer')
@@ -67,6 +78,7 @@ class UI(QMainWindow):
 
         self._run_button.setFixedSize(200, 200)
         self._control_layout.addWidget(self._run_button, alignment=Qt.AlignRight)
+        self._run_button.clicked.connect(self.__run_doom)
 
         self._setup_layout.addWidget(self._iwads_widget)
         self._setup_layout.addWidget(self._pwads_widget)
@@ -91,7 +103,7 @@ class UI(QMainWindow):
             self._config.init_default_config()
             self._config.write_config()
             info_dialog = QMessageBox()
-            info_dialog.about(self, 'It seems you are using Doomer first time or your config file '
+            info_dialog.showMessage('It seems you are using Doomer first time or your config file '
                                     'is corrupted. Doomer will load default config file.')
             info_dialog.exec_()
 
@@ -103,9 +115,38 @@ class UI(QMainWindow):
             error_dialog.exec_()
         except FileNotFoundError:
             info_dialog = QMessageBox()
-            info_dialog.about(self, 'dooms.json file is missing! Add new doom to create new file!')
+            info_dialog.showMessage('dooms.json file is missing! Add new doom to create new file!')
             info_dialog.exec_()
+
+        self._saves_handler.read_saves_dict(self._config.config_dict['saves_path'])
+        self._configs_handler.read_configs_dict(self._config.config_dict['configs_path'])
 
         self._iwads_widget.update_files_listbox()
         self._pwads_widget.update_files_listbox()
         self._pk3s_widget.update_files_listbox()
+
+    def __run_doom(self):
+        selected_doom = self._dooms_widget.selected
+
+        if not selected_doom:
+            error_dialog = QErrorMessage()
+            error_dialog.showMessage('Select any doom!')
+            error_dialog.exec_()
+            return
+        doom_name = selected_doom[0].text()
+
+        selected_iwad = self._iwads_widget.selected
+
+        if not selected_iwad:
+            error_dialog = QErrorMessage()
+            error_dialog.showMessage('Select any IWAD!')
+            error_dialog.exec_()
+            return
+        iwad_name = selected_iwad[0].text()
+
+        pwad_names = [i.text() for i in self._pwads_widget.selected]
+        pk3_names = [i.text() for i in self._pk3s_widget.selected]
+
+        command = self._launcher.create_command(doom_name, iwad_name, pwad_names, pk3_names)
+        self._launcher.launch(command)
+

@@ -6,6 +6,10 @@ from doomer.api.config import Config
 
 
 class FilesWidget(QWidget):
+    @property
+    def selected(self):
+        return self._files_listbox.selectedItems()
+
     def __init__(
             self,
             config: Config,

@@ -8,6 +8,10 @@ from doomer.api.config import Config
 
 
 class DoomsWidget(QWidget):
+    @property
+    def selected(self):
+        return self._dooms_listbox.selectedItems()
+
     def __init__(
             self,
             config: Config,
