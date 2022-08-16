@@ -48,7 +48,7 @@ class TestConfig(TestCase):
         self.assertEqual(config.config_dict, expected.config_dict)
 
     def test_write_default_config(self):
-        config = Config(CASES_PATH / 'get_existed_dir/result.json')
+        config = Config(CASES_PATH / 'out/result.json')
         config.init_default_config()
         config.write_config()
-        self.assertTrue(filecmp.cmp(CASES_PATH / 'get_existed_dir/result.json', CASES_PATH / 'init_config.json'))
+        self.assertTrue(filecmp.cmp(CASES_PATH / 'out/result.json', CASES_PATH / 'init_config.json'))
