@@ -26,9 +26,9 @@ class TestPathlibJSON(TestCase):
     )
     @unpack
     def test_PathJSONEncoder(self, input_dict, expected_file):
-        with open(CASES_PATH/'get_existed_dir/result.json', 'w') as f:
+        with open(CASES_PATH/'out/result.json', 'w') as f:
             json.dump(input_dict, f, cls=PathJSONEncoder)
-        self.assertTrue(filecmp.cmp(CASES_PATH/'get_existed_dir/result.json', expected_file))
+        self.assertTrue(filecmp.cmp(CASES_PATH/'out/result.json', expected_file))
 
     @data(
         (CASES_PATH / 'empty.json',

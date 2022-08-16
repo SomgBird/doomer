@@ -25,7 +25,7 @@ class UI(QMainWindow):
         self._dooms_handler = DoomsHandler()
         self._iwads_handler = FilesHandler({'wad': [b'IWAD'], 'WAD': [b'IWAD']})
         self._pwads_handler = FilesHandler({'wad': [b'PWAD'], 'WAD': [b'PWAD']})
-        self._pk3s_handler = FilesHandler({'pk3': [b'PK']})
+        self._pk3s_handler = FilesHandler({'pk3': [b'PK'], 'PK3': [b'PK']})
         self._saves_handler = SavesHandler()
         self._configs_handler = ConfigsHandler()
         self._launcher = Launcher(
@@ -148,5 +148,6 @@ class UI(QMainWindow):
         pk3_names = [i.text() for i in self._pk3s_widget.selected]
 
         command = self._launcher.create_command(doom_name, iwad_name, pwad_names, pk3_names)
+        print(command)
         self._launcher.launch(command)
 

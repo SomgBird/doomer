@@ -76,5 +76,5 @@ class TestDoomsHandler(TestCase):
         dooms_handler = DoomsHandler()
         for name, path in input_dooms:
             dooms_handler.add_doom(path, name)
-        dooms_handler.write_dooms(CASES_PATH / 'get_existed_dir/result.json')
-        self.assertTrue(filecmp.cmp(CASES_PATH / 'get_existed_dir/result.json', expected_file))
+        dooms_handler.write_dooms(CASES_PATH / 'out/result.json')
+        self.assertTrue(filecmp.cmp(CASES_PATH / 'out/result.json', expected_file))
