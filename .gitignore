@@ -109,8 +109,9 @@ config.json
 dooms.json
 
 configs/
-wads/
+iwads/
 dooms/
-pk3s/
+files/
 screenshots/
 saves/
+/tests/test_api/pathlib_json_cases/out/result.json

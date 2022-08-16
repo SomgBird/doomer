@@ -14,6 +14,6 @@ class PathJSONDecoder(json.JSONDecoder):
         json.JSONDecoder.__init__(self, object_hook=self.__object_hook, *args, **kwargs)
 
     def __object_hook(self, o):
-        if isinstance(0, str):
-            return pathlib.Path(o)
+        for key in o.keys():
+            o[key] = pathlib.Path(o[key])
         return o

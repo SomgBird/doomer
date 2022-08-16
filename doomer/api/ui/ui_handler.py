@@ -70,6 +70,7 @@ class UI:
             tk.messagebox.showerror('Error!', 'Could not load config file! Default configuration will be used.')
         except KeyError:
             self._config.init_default_config()
+            self._config.write_config()
             tk.messagebox.showinfo('Default settings!', 'It seems you are using Doomer first time or your config file '
                                                         'is corrupted. Doomer will load default config file.')
 
